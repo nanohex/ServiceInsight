@@ -197,12 +197,14 @@
             }
         }
 
+        AbstractLicenseValidator validator;
+
         const string InvalidLicenseVersionMessage = "Your license is valid for an older version of ServiceInsight. If you are still within the 1 year upgrade protection period of your original license, you should have already received a new license and if you haven’t, please contact customer.care@particular.net If your upgrade protection has lapsed, you can renew it at http://particular.net/support";
         const string LicenseTypeKey = "LicenseType";
         const string LicenseVersionKey = "LicenseVersion";
+        const string PublicKey = @"<RSAKeyValue><Modulus>5M9/p7N+JczIN/e5eObahxeCIe//2xRLA9YTam7zBrcUGt1UlnXqL0l/8uO8rsO5tl+tjjIV9bOTpDLfx0H03VJyxsE8BEpSVu48xujvI25+0mWRnk4V50bDZykCTS3Du0c8XvYj5jIKOHPtU//mKXVULhagT8GkAnNnMj9CvTc=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
 
         static readonly ILog Logger = LogManager.GetLogger(typeof(ILicenseManager));
-        AbstractLicenseValidator validator;
 
     }
 }
