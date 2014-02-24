@@ -1,41 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using log4net;
-using NServiceBus.Profiler.Desktop.Core.Settings;
-using NServiceBus.Profiler.Desktop.Settings;
-using Rhino.Licensing;
-
-namespace NServiceBus.Profiler.Desktop.Core.Licensing
+﻿namespace NServiceBus.Profiler.Desktop.Core.Licensing
 {
+    using System;
+    using System.Collections.Generic;
+    using log4net;
+    using Rhino.Licensing;
+
     public class AppLicenseManager : ILicenseManager
     {
-        private const string InvalidLicenseVersionMessage = "Your license is valid for an older version of ServiceInsight. If you are still within the 1 year upgrade protection period of your original license, you should have already received a new license and if you haven’t, please contact customer.care@particular.net If your upgrade protection has lapsed, you can renew it at http://particular.net/support";
-        private const string InvalidTrialPeriodMessage = "Trial period is not valid; Please contact Particular Software support for assistance";
-        private const string LicenseTypeKey = "LicenseType";
-        private const string LicenseVersionKey = "LicenseVersion";
-        private const string DateFormat = "M/d/yyyy"; 
-        private const int TrialDays = 45;
-
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(ILicenseManager));
-        private readonly LicenseSettings _licenseSettings;
-        private readonly ISettingsProvider _settingsProvider;
-        private readonly ICryptoService _cryptoService;
-        private AbstractLicenseValidator _validator;
-
-        public AppLicenseManager(
-            ISettingsProvider settingsProvider, 
-            ICryptoService cryptoService)
+        public AppLicenseManager()
         {
-            _settingsProvider = settingsProvider;
-            _cryptoService = cryptoService;
-            _licenseSettings = settingsProvider.GetSettings<LicenseSettings>();
             Initialize();
         }
 
         public void Initialize(string license = null)
         {
-            _validator = CreateValidator(license);
+            validator = CreateValidator(license);
             Validate(license);
         }
 
@@ -43,21 +22,31 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
 
         public bool TrialExpired { get; private set; }
 
-        private void Validate(string license)
-        {
 
-#if RELEASE
-            if (_validator != null)
+        public int GetRemainingTrialDays()
+        {
+            var now = DateTime.UtcNow.Date;
+
+            var expiration = LicenseDescriptor.GetTrialExpirationFromRegistry();
+
+            var remainingDays = (expiration - now).Days;
+
+            return remainingDays > 0 ? remainingDays : 0;
+        }
+
+        void Validate(string license)
+        {
+            if (validator != null)
             {
                 try
                 {
-                    _validator.AssertValidLicense();
+                    validator.AssertValidLicense();
 
-                    Logger.InfoFormat("Found a {0} license.", _validator.LicenseType);
-                    Logger.InfoFormat("Registered to {0}", _validator.Name);
-                    Logger.InfoFormat("Expires on {0}", _validator.ExpirationDate);
-                    if ((_validator.LicenseAttributes != null) && (_validator.LicenseAttributes.Count > 0))
-                        foreach (var licenseAttribute in _validator.LicenseAttributes)
+                    Logger.InfoFormat("Found a {0} license.", validator.LicenseType);
+                    Logger.InfoFormat("Registered to {0}", validator.Name);
+                    Logger.InfoFormat("Expires on {0}", validator.ExpirationDate);
+                    if ((validator.LicenseAttributes != null) && (validator.LicenseAttributes.Count > 0))
+                        foreach (var licenseAttribute in validator.LicenseAttributes)
                             Logger.InfoFormat("[{0}]: [{1}]", licenseAttribute.Key, licenseAttribute.Value);
 
                     ValidateLicenseVersion();
@@ -88,12 +77,10 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
             {
                 Logger.Info("No valid license found.");
                 CreateTrialLicense();
-                ValidateTrialStartDate();
             }
-#endif
         }
 
-        private void StoreLicense(string license)
+        void StoreLicense(string license)
         {
             if (!string.IsNullOrEmpty(license))
             {
@@ -101,111 +88,37 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
             }
         }
 
-        private void StoreTrialStart(DateTime trialStart)
+        void CreateTrialLicense()
         {
-            if (string.IsNullOrEmpty(_licenseSettings.HashedStartTrial))
-            {
-                _licenseSettings.HashedStartTrial = _cryptoService.Encrypt(trialStart.ToString(DateFormat));
-                _settingsProvider.SaveSettings(_licenseSettings);
-            }
-        }
+            var trialExpirationDate = LicenseDescriptor.GetTrialExpirationFromRegistry();
 
-        private void ValidateTrialStartDate()
-        {
-            if(TrialExpired)
-                return;
-
-            if (string.IsNullOrEmpty(LicenseDescriptor.TrialStart))
-                throw new LicenseExpiredException(InvalidTrialPeriodMessage);
-        }
-
-        private void CreateTrialLicense()
-        {
-            var trialExpirationDate = TryGetExpirationDate();
-
-            if (trialExpirationDate.HasValue && trialExpirationDate.Value > DateTime.UtcNow.Date)
+            if (trialExpirationDate > DateTime.UtcNow.Date)
             {
                 Logger.InfoFormat("Trial for ServiceInsight v{0} is still active, trial expires on {1}.",
-                                   LicenseDescriptor.SoftwareVersion, 
-                                   trialExpirationDate.Value.ToLocalTime().ToShortDateString());
+                                   LicenseDescriptor.SoftwareVersion,
+                                   trialExpirationDate.ToLocalTime().ToShortDateString());
 
                 Logger.InfoFormat("Configuring ServiceInsight to run in trial mode.");
 
                 CurrentLicense = new ProfilerLicense
                 {
                     LicenseType = ProfilerLicenseTypes.Trial,
-                    ExpirationDate = trialExpirationDate.Value,
+                    ExpirationDate = trialExpirationDate,
                     Version = LicenseDescriptor.SoftwareVersion,
                     RegisteredTo = ProfilerLicense.UnRegisteredUser
                 };
-
-                StoreTrialStart(ParseDateString(LicenseDescriptor.TrialStart));
             }
             else
             {
-                Logger.InfoFormat("Trial for ServiceInsight v{0} has expired.", LicenseDescriptor.SoftwareVersion);
-                Logger.Warn("Falling back to run in Trial license mode.");
+                Logger.WarnFormat("Trial for ServiceInsight v{0} has expired.", LicenseDescriptor.SoftwareVersion);
 
                 TrialExpired = true;
             }
         }
 
-        private DateTime? TryGetExpirationDate()
-        {
-            try
-            {
-                return GetTrialExpirationDate();
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Logger.Error("Could not read from the registry. Because we didn't find a license file we assume the trial has expired.", ex);
-                return null;
-            }
-        }
+     
 
-        private DateTime GetTrialExpirationDate()
-        {
-            var trialExpirationDate = DateTime.UtcNow.Date;
-
-            if (LicenseDescriptor.TrialStart == null)
-            {
-                TrialExpired = true;
-            }
-            else
-            {
-                var trialStartDate = ParseDateString(LicenseDescriptor.TrialStart);
-                trialExpirationDate = trialStartDate.Date.AddDays(TrialDays);
-            }
-
-            return trialExpirationDate;
-        }
-
-        private static DateTime ParseDateString(string date)
-        {
-            try
-            {
-                return DateTime.ParseExact(date, DateFormat, CultureInfo.InvariantCulture);
-            }
-            catch
-            {
-                throw new InvalidLicenseException(InvalidTrialPeriodMessage);
-            }
-        }
-
-        public int GetRemainingTrialDays()
-        {
-            var now = DateTime.UtcNow.Date;
-            var expiration = TryGetExpirationDate();
-
-            if (!expiration.HasValue)
-                return 0;
-
-            var remainingDays = (expiration - now).Value.Days;
-
-            return remainingDays > 0 ? remainingDays : 0;
-        }
-
-        private AbstractLicenseValidator CreateValidator(string license = null)
+        AbstractLicenseValidator CreateValidator(string license = null)
         {
             if (license == null && !string.IsNullOrEmpty(LicenseDescriptor.License))
             {
@@ -216,17 +129,17 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
             return new StringLicenseValidator(LicenseDescriptor.PublicKey, license);
         }
 
-        private void ValidateLicenseVersion()
+        void ValidateLicenseVersion()
         {
-            if (_validator.LicenseType == LicenseType.None)
+            if (validator.LicenseType == LicenseType.None)
                 return;
 
-            if (_validator.LicenseAttributes.ContainsKey(LicenseVersionKey))
+            if (validator.LicenseAttributes.ContainsKey(LicenseVersionKey))
             {
                 try
                 {
                     var semver = LicenseDescriptor.ApplicationVersion;
-                    var licenseVersion = Version.Parse(_validator.LicenseAttributes[LicenseVersionKey]);
+                    var licenseVersion = Version.Parse(validator.LicenseAttributes[LicenseVersionKey]);
                     if (licenseVersion >= semver)
                         return;
                 }
@@ -239,11 +152,11 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
             throw new InvalidLicenseException(InvalidLicenseVersionMessage);
         }
 
-        private void CreateLicense()
+        void CreateLicense()
         {
             CurrentLicense = new ProfilerLicense();
 
-            switch (_validator.LicenseType)
+            switch (validator.LicenseType)
             {
                 case LicenseType.None:
                     CurrentLicense.LicenseType = ProfilerLicenseTypes.Trial;
@@ -255,33 +168,41 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
                     SetLicenseType(ProfilerLicenseTypes.Trial);
                     break;
                 default:
-                    Logger.Error(string.Format("Got unexpected license type [{0}], setting Basic1 free license type.", _validator.LicenseType), null);
+                    Logger.Error(string.Format("Got unexpected license type [{0}], setting Basic1 free license type.", validator.LicenseType), null);
                     CurrentLicense.LicenseType = ProfilerLicenseTypes.Trial;
                     break;
             }
 
-            CurrentLicense.ExpirationDate = _validator.ExpirationDate;
-            ConfigureLicenseBasedOnAttribute(_validator.LicenseAttributes);
+            CurrentLicense.ExpirationDate = validator.ExpirationDate;
+            ConfigureLicenseBasedOnAttribute(validator.LicenseAttributes);
         }
 
-        private void ConfigureLicenseBasedOnAttribute(IDictionary<string, string> attributes)
+        void ConfigureLicenseBasedOnAttribute(IDictionary<string, string> attributes)
         {
             CurrentLicense.Version = attributes[LicenseVersionKey];
-            CurrentLicense.RegisteredTo = _validator.Name;
+            CurrentLicense.RegisteredTo = validator.Name;
         }
 
-        private void SetLicenseType(string defaultLicenseType)
+        void SetLicenseType(string defaultLicenseType)
         {
-            if ((_validator.LicenseAttributes == null) ||
-                (!_validator.LicenseAttributes.ContainsKey(LicenseTypeKey)) ||
-                (string.IsNullOrEmpty(_validator.LicenseAttributes[LicenseTypeKey])))
+            if ((validator.LicenseAttributes == null) ||
+                (!validator.LicenseAttributes.ContainsKey(LicenseTypeKey)) ||
+                (string.IsNullOrEmpty(validator.LicenseAttributes[LicenseTypeKey])))
             {
                 CurrentLicense.LicenseType = defaultLicenseType;
             }
             else
             {
-                CurrentLicense.LicenseType = _validator.LicenseAttributes[LicenseTypeKey];
+                CurrentLicense.LicenseType = validator.LicenseAttributes[LicenseTypeKey];
             }
         }
+
+        const string InvalidLicenseVersionMessage = "Your license is valid for an older version of ServiceInsight. If you are still within the 1 year upgrade protection period of your original license, you should have already received a new license and if you haven’t, please contact customer.care@particular.net If your upgrade protection has lapsed, you can renew it at http://particular.net/support";
+        const string LicenseTypeKey = "LicenseType";
+        const string LicenseVersionKey = "LicenseVersion";
+
+        static readonly ILog Logger = LogManager.GetLogger(typeof(ILicenseManager));
+        AbstractLicenseValidator validator;
+
     }
 }
