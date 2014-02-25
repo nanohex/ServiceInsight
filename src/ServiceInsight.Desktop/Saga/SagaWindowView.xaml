@@ -6,6 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:models="clr-namespace:NServiceBus.Profiler.Desktop.Models"
+             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.Saga"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -346,6 +347,37 @@
                         </DataTemplate.Triggers>
                     </DataTemplate>
 
+                    <DataTemplate x:Key="LongValuesTemplate">
+                        <StackPanel Background="{StaticResource SagaBackground}" >
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueLong, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0" >
+                                <TextBlock Text="{Binding Name}" Width="100px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}" />
+                                <CheckBox x:Name="MoreData">
+                                    <CheckBox.Template>
+                                        <ControlTemplate TargetType="{x:Type CheckBox}">
+                                                    <TextBlock Text="(more data)"
+                                                        MaxWidth="155"
+                                                        FontSize="14px"
+                                                        FontWeight="Bold"
+                                                        Foreground="{StaticResource SagaBlue}"
+                                                        />
+                                        </ControlTemplate>
+                                    </CheckBox.Template>
+                                </CheckBox>
+
+                                <Popup x:Name="MenuPopup" IsOpen="{Binding ElementName=MoreData, Path=IsChecked}" 
+                                                                           DataContext="{Binding}"
+                                                                           PlacementTarget="{Binding ElementName=MoreData}"
+                                                                           Placement="Left"
+                                                                           HorizontalAlignment="Stretch"
+                                                                           AllowsTransparency="True"
+                                                                           StaysOpen="False">
+                                    <local:SagaPropertyPopup />
+                                </Popup>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
                     <DataTemplate x:Key="UpdatedValuesTemplate">
                         <StackPanel Background="{StaticResource SagaBackground}"  >
                             <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueChanged, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0">
@@ -360,17 +392,18 @@
                                 <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}"/>
                                 <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold" />
                             </StackPanel>
+                            <ContentPresenter ContentTemplate="{StaticResource LongValuesTemplate}" ContentSource="{Binding}" />
                         </StackPanel>
                     </DataTemplate>
 
                     <DataTemplate x:Key="AllValuesTemplate">
                         <StackPanel Background="{StaticResource SagaBackground}" >
-                            <ContentPresenter ContentTemplate="{StaticResource UpdatedValuesTemplate}" ContentSource="{Binding}" />
                             <StackPanel Orientation="Horizontal" Visibility="{Binding IsValueNotUpdated, Converter={StaticResource BoolToVisibilityCollapseConverter}}" Margin="0 6 0 0" >
                                 <TextBlock Text="{Binding Name}" Width="120px" Foreground="{StaticResource SagaForeground}" TextTrimming="CharacterEllipsis"/>
                                 <TextBlock Text=" =    " Foreground="{StaticResource SagaForeground}" />
                                 <TextBlock Text="{Binding NewValue}" Foreground="{StaticResource SagaForeground}" FontWeight="Bold" />
                             </StackPanel>
+                            <ContentPresenter ContentTemplate="{StaticResource UpdatedValuesTemplate}" ContentSource="{Binding}" />
                         </StackPanel>
                     </DataTemplate>
 
@@ -382,7 +415,6 @@
                                 <TextBlock Text=" /" Foreground="#B3B3B3" />
                                 <RadioButton x:Name="Updated" Content="Updated" IsChecked="True" Style="{StaticResource PropertiesRadioButton}" />
                             </StackPanel>
-
 
                             <ItemsControl ItemsSource="{Binding Values}" >
                                 <ItemsControl.Style>

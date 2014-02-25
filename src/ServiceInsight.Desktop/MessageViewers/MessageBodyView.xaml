@@ -6,6 +6,7 @@
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:local="clr-namespace:NServiceBus.Profiler.Desktop.MessageViewers.HexViewer"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -33,31 +34,5 @@
             </dxlc:LayoutGroup>
         </dxlc:LayoutControl>
     </Grid>
-<!--    <TabControl Margin="10">-->
-<!--        -->
-<!--        <TabControl.Items>-->
-<!--            -->
-<!--            <TabItem Header="Hex">-->
-<!--                <TabItem.Content>-->
-<!--                    <ContentControl cal:View.Model="{Binding Path=HexViewer}"></ContentControl>-->
-<!--                </TabItem.Content>-->
-<!--            </TabItem>-->
-<!---->
-<!--            <TabItem Header="Json">-->
-<!--                <TabItem.Content>-->
-<!--                    <ContentControl cal:View.Model="{Binding Path=JsonViewer}"></ContentControl>-->
-<!--                </TabItem.Content>-->
-<!--            </TabItem>-->
-<!---->
-<!--            <TabItem Header="Xml">-->
-<!--                <TabItem.Content>-->
-<!--                    <ContentControl Padding="0" Margin="0" cal:View.Model="{Binding Path=XmlViewer}"></ContentControl>-->
-<!--                </TabItem.Content>-->
-<!--            </TabItem>-->
-<!---->
-<!--        </TabControl.Items>-->
-<!--        -->
-<!--    </TabControl>-->
-    
-    
+   
 </UserControl>

@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewer="clr-namespace:NServiceBus.Profiler.Desktop.MessageViewers"
+             xmlns:saga="clr-namespace:NServiceBus.Profiler.Desktop.Saga"
              mc:Ignorable="d" 
              d:DesignHeight="522" d:DesignWidth="926">
     <Grid.Resources>
@@ -10,6 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Images/Xaml/XamlIcons.xaml" />
                 <ResourceDictionary>
+                    <saga:ValueToBodyConverter x:Key="ValueToBodyConverter" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -32,6 +35,7 @@
                     <TextBlock Text=" - Properties" Foreground="#B3B3B3" FontSize="20px"/>
                 </StackPanel>
             </StackPanel>
+            <viewer:MessageBodyView Grid.Row="1" DataContext="{Binding NewValue,Converter={StaticResource ValueToBodyConverter}}" Background="#252526"/>
         </Grid>
     </Border>
 </Grid>

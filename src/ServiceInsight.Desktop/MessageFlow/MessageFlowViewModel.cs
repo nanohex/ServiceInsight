@@ -169,8 +169,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
 
             try
             {
-                _eventAggregator.Publish(new WorkStarted("Loading conversation data..."));
-
                 var relatedMessagesTask = await _serviceControl.GetConversationById(conversationId);
                 var nodes = relatedMessagesTask.ConvertAll(CreateMessageNode);
 
@@ -182,8 +180,6 @@ namespace NServiceBus.Profiler.Desktop.MessageFlow
             {
                 _loadingConversation = false;
             }
-
-            _eventAggregator.Publish(new WorkFinished());
         }
 
         public void ZoomIn()

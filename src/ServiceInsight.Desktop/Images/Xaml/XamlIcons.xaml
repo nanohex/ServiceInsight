@@ -335,4 +335,77 @@
             </Canvas>
         </Canvas>
     </ControlTemplate>
+    <ControlTemplate x:Key="LongPropertiesIcon">
+        <Canvas Name="Layer_1" Width="21" Height="22" Canvas.Left="0" Canvas.Top="0">
+            <Canvas Name="g2986">
+                <Canvas Name="g2988">
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="9" Width="1" Height="4" Name="rect2990" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="10" Width="3" Height="1" Name="rect2992" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="11" Canvas.Top="1" Width="2" Height="1" Name="rect2994" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="12" Canvas.Top="2" Width="1" Height="2" Name="rect2996" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="10" Canvas.Top="2" Width="1" Height="3" Name="rect2998" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="11" Canvas.Top="4" Width="1" Height="1" Name="rect3000" Fill="#FFB3B3B3"/>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="g3002">
+                <Canvas Name="g3004">
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="13" Canvas.Top="8" Width="1" Height="4" Name="rect3006" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="8" Width="3" Height="1" Name="rect3008" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="15" Canvas.Top="9" Width="2" Height="1" Name="rect3010" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="16" Canvas.Top="10" Width="1" Height="2" Name="rect3012" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="10" Width="1" Height="3" Name="rect3014" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="15" Canvas.Top="12" Width="1" Height="1" Name="rect3016" Fill="#FFB3B3B3"/>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="g3018">
+                <Canvas Name="g3020">
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="1" Height="4" Name="rect3022" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1" Width="3" Height="1" Name="rect3024" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="2" Canvas.Top="1" Width="2" Height="1" Name="rect3026" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="3" Canvas.Top="2" Width="1" Height="2" Name="rect3028" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="1" Canvas.Top="2" Width="1" Height="3" Name="rect3030" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="2" Canvas.Top="4" Width="1" Height="1" Name="rect3032" Fill="#FFB3B3B3"/>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="g3034">
+                <Canvas Name="g3036">
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="4" Canvas.Top="17" Width="1" Height="4" Name="rect3038" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="5" Canvas.Top="17" Width="3" Height="1" Name="rect3040" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="6" Canvas.Top="18" Width="2" Height="1" Name="rect3042" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="7" Canvas.Top="19" Width="1" Height="2" Name="rect3044" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="5" Canvas.Top="19" Width="1" Height="3" Name="rect3046" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="6" Canvas.Top="21" Width="1" Height="1" Name="rect3048" Fill="#FFB3B3B3"/>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="g3050">
+                <Canvas Name="g3052">
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="12" Canvas.Top="17" Width="1" Height="4" Name="rect3054" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="13" Canvas.Top="17" Width="3" Height="1" Name="rect3056" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="18" Width="2" Height="1" Name="rect3058" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="15" Canvas.Top="19" Width="1" Height="2" Name="rect3060" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="13" Canvas.Top="19" Width="1" Height="3" Name="rect3062" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="21" Width="1" Height="1" Name="rect3064" Fill="#FFB3B3B3"/>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="g3066">
+                <Canvas Name="g3068">
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="17" Canvas.Top="17" Width="1" Height="4" Name="rect3070" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="18" Canvas.Top="17" Width="3" Height="1" Name="rect3072" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="19" Canvas.Top="18" Width="2" Height="1" Name="rect3074" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="20" Canvas.Top="19" Width="1" Height="2" Name="rect3076" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="18" Canvas.Top="19" Width="1" Height="3" Name="rect3078" Fill="#FFB3B3B3"/>
+                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="19" Canvas.Top="21" Width="1" Height="1" Name="rect3080" Fill="#FFB3B3B3"/>
+                </Canvas>
+            </Canvas>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="16,4 16,1 16,0 14,0 14,1 15,1 15,4 14,4 14,5 17,5 17,4 " Name="polygon3082" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="11,12 11,9 11,8 9,8 9,9 10,9 10,12 9,12 9,13 12,13 12,12 " Name="polygon3084" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="20,4 20,1 20,0 18,0 18,1 19,1 19,4 18,4 18,5 21,5 21,4 " Name="polygon3086" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="7,4 7,1 7,0 5,0 5,1 6,1 6,4 5,4 5,5 8,5 8,4 " Name="polygon3088" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="7,12 7,9 7,8 5,8 5,9 6,9 6,12 5,12 5,13 8,13 8,12 " Name="polygon3090" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="3,12 3,9 3,8 1,8 1,9 2,9 2,12 1,12 1,13 4,13 4,12 " Name="polygon3092" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="3,21 3,18 3,17 1,17 1,18 2,18 2,21 1,21 1,22 4,22 4,21 " Name="polygon3094" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="11,21 11,18 11,17 9,17 9,18 10,18 10,21 9,21 9,22 12,22 12,21 " Name="polygon3096" FillRule="NonZero" Fill="#FFB3B3B3"/>
+            <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="20,12 20,9 20,8 18,8 18,9 19,9 19,12 18,12 18,13 21,13 21,12 " Name="polygon3098" FillRule="NonZero" Fill="#FFB3B3B3"/>
+        </Canvas>
+    </ControlTemplate>
 </ResourceDictionary>

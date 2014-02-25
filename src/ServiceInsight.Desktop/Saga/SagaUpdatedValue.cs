@@ -23,7 +23,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             get
             {
-                return !string.IsNullOrEmpty(OldValue) && NewValue != OldValue;
+                return !string.IsNullOrEmpty(OldValue) && NewValue != OldValue && !IsValueLong;
             }
         }
 
@@ -31,7 +31,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             get
             {
-                return string.IsNullOrEmpty(OldValue);
+                return string.IsNullOrEmpty(OldValue) && !IsValueLong;
             }
         }
 
@@ -39,7 +39,15 @@ namespace NServiceBus.Profiler.Desktop.Saga
         {
             get
             {
-                return !IsValueChanged && !IsValueNew;
+                return !IsValueChanged && !IsValueNew && !IsValueLong;
+            }
+        }
+
+        public bool IsValueLong
+        {
+            get
+            {
+                return NewValue.Length > 30 || NewValue.Contains('\n');
             }
         }
     }
