@@ -6,9 +6,9 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
     using System.Globalization;
     using log4net;
 
-    public class LicenseDescriptor
+    public class LicenseStore
     {
-        public static DateTime GetTrialExpirationFromRegistry()
+        public static DateTime GetTrialExpiration()
         {
             //If first time run, configure expire date
             try
@@ -73,7 +73,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
         
 
 
-        static readonly ILog Logger = LogManager.GetLogger(typeof(LicenseDescriptor));
+        static readonly ILog Logger = LogManager.GetLogger(typeof(LicenseStore));
         const int TRIAL_DAYS = 14;
     }
 }

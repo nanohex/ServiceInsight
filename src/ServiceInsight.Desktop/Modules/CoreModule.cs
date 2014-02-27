@@ -24,7 +24,6 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<DefaultMapper>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<NetworkOperations>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<AppLicenseManager>().SingleInstance();
-            builder.RegisterType<CryptographyService>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ServiceControlConnectionProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DefaultServiceControl>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<HeaderInfoSerializer>().AsImplementedInterfaces();

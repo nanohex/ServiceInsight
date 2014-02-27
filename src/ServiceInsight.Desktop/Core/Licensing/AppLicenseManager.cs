@@ -7,7 +7,7 @@
     {
         public AppLicenseManager()
         {
-            Validate(LicenseDescriptor.License);
+            Validate(LicenseStore.License);
         }
 
         public bool TryInstallLicense(string license)
@@ -16,7 +16,7 @@
             {
                 CurrentLicense = ValidateStandardLicense(license);
 
-                LicenseDescriptor.License = license;
+                LicenseStore.License = license;
 
                 return true;
             }
@@ -32,7 +32,7 @@
         {
             var now = DateTime.UtcNow.Date;
 
-            var expiration = LicenseDescriptor.GetTrialExpirationFromRegistry();
+            var expiration = LicenseStore.GetTrialExpiration();
 
             var remainingDays = (expiration - now).Days;
 
@@ -72,7 +72,7 @@
 
         ProfilerLicense CreateTrialLicense()
         {
-            var trialExpirationDate = LicenseDescriptor.GetTrialExpirationFromRegistry();
+            var trialExpirationDate = LicenseStore.GetTrialExpiration();
 
             Logger.InfoFormat("Configuring ServiceInsight to run in trial mode.");
 
