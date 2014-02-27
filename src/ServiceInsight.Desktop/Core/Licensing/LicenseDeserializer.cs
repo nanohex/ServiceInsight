@@ -28,7 +28,8 @@
 
             if (expirationDate != null)
             {
-                license.ExpirationDate = Parse(expirationDate.Value);    
+                license.ExpirationDate = Parse(expirationDate.Value);  
+ 
             }
             
             var upgradeProtectionExpiration = doc.SelectSingleNode("/license/@UpgradeProtectionExpiration");

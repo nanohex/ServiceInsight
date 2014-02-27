@@ -36,6 +36,9 @@
             Assert.AreEqual("Basic", license.LicenseType);
             
             Assert.IsFalse(license.UpgradeProtectionExpiration.HasValue);
+            Assert.IsTrue(license.Expired);
+            Assert.IsTrue(license.IsCommercialLicense);
+            Assert.IsFalse(license.IsTrialLicense);
         }
 
         [Test]
@@ -45,6 +48,19 @@
 
         }
 
+        [Test]
+        public void WithInvalidKey()
+        {
+            Assert.Throws<Exception>(() => new XmlSigning.SignedXmlVerifier(AppLicenseManager.PublicKey).VerifyXml(File.ReadAllText(@".\licensing\Invalid_key.xml")));
+        }
+
+
+
+        [Test]
+        public void WithTamperedData()
+        {
+            Assert.Throws<Exception>(() => new XmlSigning.SignedXmlVerifier(AppLicenseManager.PublicKey).VerifyXml(File.ReadAllText(@".\licensing\SI_Basic_tampered.xml")));
+        }
 
         [Test]
         [Ignore("Not implemented yet")]

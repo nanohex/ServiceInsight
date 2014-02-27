@@ -6,6 +6,8 @@ using NServiceBus.Profiler.Desktop.ScreenManager;
 
 namespace NServiceBus.Profiler.Desktop.Shell
 {
+    using DevExpress.Utils.FormShadow;
+
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {
         private readonly AppLicenseManager licenseManager;
@@ -56,12 +58,12 @@ namespace NServiceBus.Profiler.Desktop.Shell
 
         public bool HasTrialLicense
         {
-            get { return LicenseType == ProfilerLicenseTypes.Trial; }
+            get { return licenseManager.CurrentLicense.IsTrialLicense; }
         }
 
         public bool HasFullLicense
         {
-            get { return LicenseType == ProfilerLicenseTypes.Standard; }
+            get { return licenseManager.CurrentLicense.IsCommercialLicense; }
         }
 
         public bool HasRemainingTrial
@@ -101,6 +103,10 @@ namespace NServiceBus.Profiler.Desktop.Shell
             if (validLicense)
             {
                 TryClose(true);
+            }
+            else
+            {
+                //todo: Display error saying that the license was invalid
             }
         }
 

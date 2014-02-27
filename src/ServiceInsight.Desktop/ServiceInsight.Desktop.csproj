@@ -252,7 +252,6 @@
     <Compile Include="Core\Licensing\AppLicenseManager.cs" />
     <Compile Include="Core\Licensing\InvalidLicenseException.cs" />
     <Compile Include="Core\Licensing\LicenseStore.cs" />
-    <Compile Include="Core\Licensing\LicenseType.cs" />
     <Compile Include="Core\Licensing\PlatformLicense.cs" />
     <Compile Include="Core\MessageDecoders\DecoderResult.cs" />
     <Compile Include="Core\MessageDecoders\HeaderContentDecoder.cs" />

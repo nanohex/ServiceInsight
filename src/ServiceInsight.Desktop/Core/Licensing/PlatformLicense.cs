@@ -6,13 +6,33 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
     {
         public PlatformLicense()
         {
-            LicenseType = ProfilerLicenseTypes.Standard;
-            RegisteredTo = "Unregistered User";
+            LicenseType = "Trial";
         }
 
         public DateTime? ExpirationDate { get; set; }
 
-        public bool Expired { get; set; }
+        public bool Expired
+        {
+            get
+            {
+                if (ExpirationDate.HasValue)
+                {
+                    return DateTime.Today > ExpirationDate.Value;
+                }
+
+                return true;
+            }
+        }
+
+        public bool IsTrialLicense
+        {
+            get { return !IsCommercialLicense; }
+        }
+
+        public bool IsCommercialLicense
+        {
+            get { return LicenseType.ToLower() != "trial"; }
+        }
 
         public string LicenseType { get; set; }
 

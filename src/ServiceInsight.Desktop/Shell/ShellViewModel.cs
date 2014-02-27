@@ -40,9 +40,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private DispatcherTimer _refreshTimer;
         private DispatcherTimer _idleTimer;
         
-        public const string UnlicensedStatusMessage = "Unlicensed version: {0} left";
-        public const string LicensedStatusMessage = "Registered to '{0}'";
-
         public ShellViewModel(
             IAppCommands appCommander,
             IScreenFactory screenFactory,
@@ -392,7 +389,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         
         private void ValidateLicense()
         {
-            if (_licenseManager.CurrentLicense.LicenseType == ProfilerLicenseTypes.Trial && _licenseManager.CurrentLicense.Expired)
+            if (_licenseManager.CurrentLicense.Expired)
             {
                 RegisterLicense();
             }
@@ -408,13 +405,13 @@ namespace NServiceBus.Profiler.Desktop.Shell
             {
                 return;
             }
-            if (license.LicenseType == ProfilerLicenseTypes.Standard)
+            if (license.IsCommercialLicense)
             {
-                StatusBarManager.SetRegistrationInfo(LicensedStatusMessage, license.RegisteredTo);
+                StatusBarManager.SetRegistrationInfo("{0} license, registered to '{1}'",license.LicenseType,license.RegisteredTo);
             }
             else
             {
-                StatusBarManager.SetRegistrationInfo(UnlicensedStatusMessage, ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
+                StatusBarManager.SetRegistrationInfo("Unlicensed version: {0} left", ("day").PluralizeWord(_licenseManager.GetRemainingTrialDays()));
             }
         }
 
