@@ -15,7 +15,14 @@ namespace NServiceBus.Profiler.Desktop.Saga
     public class SagaMessage : PropertyChangedBase
     {
         public Guid MessageId { get; set; }
-        public bool IsPublished { get; set; }
+        public bool IsPublished 
+        {
+            get
+            {
+                return string.Equals("Publish", Intent, StringComparison.InvariantCultureIgnoreCase);
+            }
+        }
+
         public virtual bool IsTimeout
         {
             get
@@ -56,6 +63,7 @@ namespace NServiceBus.Profiler.Desktop.Saga
         public DateTime TimeSent { get; set; }
         public string ReceivingEndpoint { get; set; }
         public string OriginatingEndpoint { get; set; }
+        public string Intent { get; set; }
 
         private MessageStatus status;
         public MessageStatus Status

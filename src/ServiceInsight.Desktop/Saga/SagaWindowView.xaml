@@ -266,16 +266,7 @@
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Margin="0,4,0,0"
-                                                   Width="20"
-                                                   Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverterInverted}}" />
-                                <ContentControl Template="{StaticResource TimeoutIcon}" 
-                                                   Grid.Row="1" Grid.Column="0"
-                                                   ToolTip="Timeout"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Margin="0,8,0,0"
-                                                   Width="24"
-                                                   Visibility="{Binding IsTimeout, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
+                                                   Width="20" />
 
                                 <StackPanel x:Name="MessageTypeBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding MessageType}" FontSize="14px" FontWeight="Bold" />
@@ -312,6 +303,34 @@
                             </Grid>
                         </Border>
                         <DataTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsPublished}" Value="False" />
+                                    <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Template" TargetName="MessageTypeIcon" Value="{StaticResource CommandIcon}" />
+                                <Setter Property="ToolTip" TargetName="MessageTypeIcon" Value="Command" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsPublished}" Value="True" />
+                                    <Condition Binding="{Binding IsTimeout}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Template" TargetName="MessageTypeIcon" Value="{StaticResource EventIcon}" />
+                                <Setter Property="Margin" TargetName="MessageTypeIcon" Value="0,8,0,0" />
+                                <Setter Property="Width" TargetName="MessageTypeIcon" Value="24" />
+                                <Setter Property="ToolTip" TargetName="MessageTypeIcon" Value="Event" />
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsTimeout}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Template" TargetName="MessageTypeIcon" Value="{StaticResource TimeoutIcon}" />
+                                <Setter Property="Margin" TargetName="MessageTypeIcon" Value="0,8,0,0" />
+                                <Setter Property="Width" TargetName="MessageTypeIcon" Value="24" />
+                                <Setter Property="ToolTip" TargetName="MessageTypeIcon" Value="Timeout" />
+                            </MultiDataTrigger>
+
                             <DataTrigger Binding="{Binding ShowData}" Value="False">
                                 <DataTrigger.Setters>
                                     <Setter TargetName="EmptyPropertyText" Property="Visibility" Value="{Binding ElementName=Surface, Path=DataContext.ShowMessageData, Converter={StaticResource BoolToVisibilityCollapseConverter}}" />
