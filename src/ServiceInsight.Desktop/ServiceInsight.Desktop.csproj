@@ -159,10 +159,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Licensing, Version=1.3.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rhino.Licensing.1.3\lib\Net45\Rhino.Licensing.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
@@ -254,7 +250,6 @@
     <Compile Include="Core\IQueueOperationsAsync.cs" />
     <Compile Include="Core\Licensing\AppLicenseManager.cs" />
     <Compile Include="Core\Licensing\CryptographyService.cs" />
-    <Compile Include="Core\Licensing\ILicenseManager.cs" />
     <Compile Include="Core\Licensing\InvalidLicenseException.cs" />
     <Compile Include="Core\Licensing\LicenseDescriptor.cs" />
     <Compile Include="Core\Licensing\LicenseType.cs" />

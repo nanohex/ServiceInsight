@@ -47,7 +47,7 @@ namespace NServiceBus.Profiler.Tests
         private IStatusBarManager StatusbarManager;
         private IMessageBodyViewModel MessageBodyView;
         private ISettingsProvider SettingsProvider;
-        private ILicenseManager LicenseManager;
+        private AppLicenseManager LicenseManager;
         private IShellViewStub View;
         private IMessagePropertiesViewModel MessageProperties;
         private ILogWindowViewModel LogWindow;
@@ -70,7 +70,7 @@ namespace NServiceBus.Profiler.Tests
             MessageProperties = Substitute.For<IMessagePropertiesViewModel>();
             View = Substitute.For<IShellViewStub>();
             SettingsProvider = Substitute.For<ISettingsProvider>();
-            LicenseManager = Substitute.For<ILicenseManager>();
+            LicenseManager = Substitute.For<AppLicenseManager>();
             LogWindow = Substitute.For<ILogWindowViewModel>();
             ConnectToViewModel = Substitute.For<IConnectToMachineViewModel>();
             SettingsProvider.GetSettings<ProfilerSettings>().Returns(DefaultAppSetting());

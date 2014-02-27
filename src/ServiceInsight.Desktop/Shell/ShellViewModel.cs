@@ -33,7 +33,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private readonly IScreenFactory _screenFactory;
         private readonly IWindowManagerEx _windowManager;
         private readonly IEventAggregator _eventAggregator;
-        private readonly ILicenseManager _licenseManager;
+        private readonly AppLicenseManager _licenseManager;
         private readonly ISettingsProvider _settingsProvider;
         private readonly ICommandLineArgParser _comandLineArgParser;
         private int _workCounter;
@@ -52,7 +52,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
             IMessageListViewModel messages,
             IStatusBarManager statusBarManager,
             IEventAggregator eventAggregator,
-            ILicenseManager licenseManager,
+            AppLicenseManager licenseManager,
             IMessageFlowViewModel messageFlow,
             ISagaWindowViewModel sagaWindow,
             IMessageBodyViewModel messageBodyViewer,
@@ -392,7 +392,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         
         private void ValidateLicense()
         {
-            if (_licenseManager.TrialExpired)
+            if (_licenseManager.CurrentLicense.LicenseType == ProfilerLicenseTypes.Trial && _licenseManager.CurrentLicense.Expired)
             {
                 RegisterLicense();
             }
@@ -403,7 +403,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private void DisplayRegistrationStatus()
         {
             var license = _licenseManager.CurrentLicense;
-
+            
             if (license == null)
             {
                 return;

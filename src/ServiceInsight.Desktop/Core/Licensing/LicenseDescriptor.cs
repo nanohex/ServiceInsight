@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using Microsoft.Win32;
 
 namespace NServiceBus.Profiler.Desktop.Core.Licensing
@@ -9,19 +8,6 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
 
     public class LicenseDescriptor
     {
-        public static string RegistryKey
-        {
-            get { return @"SOFTWARE\ParticularSoftware"; }
-        }
-
-        public static Version ApplicationVersion
-        {
-            get
-            {
-                var assembyVersion = Assembly.GetExecutingAssembly().GetName().Version;
-                return new Version(assembyVersion.Major, assembyVersion.Minor);
-            }
-        }
         public static DateTime GetTrialExpirationFromRegistry()
         {
             //If first time run, configure expire date
@@ -83,18 +69,8 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
             }
         }
 
-        public static string SoftwareVersion
-        {
-            get { return ApplicationVersion.ToString(2); }
-        }
-
-        public static string PublicKey
-        {
-            get
-            {
-                return @"<RSAKeyValue><Modulus>spGPDNj14Rim0Og5I1I+F3O2TVjWwDAtSHr54VzhbAg3a+2KJkjgXpZs+BKvzPiI+mscZDroF2ykEHGLSNEb0XOw8NpLFOeRrUuFzE7SOWn2fg5ZhY2u/8QrUl7yX8uIp4mxfvnvHOT/iB5cDipHvHjwE+1ZzBslMgSXecolO4E=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
-            }
-        }
+        static string RegistryKey = @"SOFTWARE\ParticularSoftware"; 
+        
 
 
         static readonly ILog Logger = LogManager.GetLogger(typeof(LicenseDescriptor));

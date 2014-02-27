@@ -4,11 +4,17 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
 {
     public class ProfilerLicense
     {
-        public const string UnRegisteredUser = "Unregistered User";
+        public ProfilerLicense()
+        {
+            LicenseType = ProfilerLicenseTypes.Standard;
+            RegisteredTo = "Unregistered User";
+        }
 
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
+
+        public bool Expired { get; set; }
+
         public string LicenseType { get; set; }
         public string RegisteredTo { get; set; }
-        public string Version { get; set; }
     }
 }

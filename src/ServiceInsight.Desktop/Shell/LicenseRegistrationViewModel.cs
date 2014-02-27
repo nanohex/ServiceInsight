@@ -8,18 +8,18 @@ namespace NServiceBus.Profiler.Desktop.Shell
 {
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {
-        private readonly ILicenseManager _licenseManager;
+        private readonly AppLicenseManager licenseManager;
         private readonly IDialogManager _dialogManager;
         private readonly INetworkOperations _network;
 
         public const string LicensingPageUrl = "http://particular.net/licensing";
 
         public LicenseRegistrationViewModel(
-            ILicenseManager licenseManager, 
+            AppLicenseManager licenseManager, 
             IDialogManager dialogManager,
             INetworkOperations network)
         {
-            _licenseManager = licenseManager;
+            this.licenseManager = licenseManager;
             _dialogManager = dialogManager;
             _network = network;
         }
@@ -27,7 +27,6 @@ namespace NServiceBus.Profiler.Desktop.Shell
         protected override void OnActivate()
         {
             base.OnActivate();
-            License = _licenseManager.CurrentLicense;
             DisplayName = GetScreenTitle();
         }
 
@@ -39,21 +38,20 @@ namespace NServiceBus.Profiler.Desktop.Shell
             return string.Format("ServiceInsight - Trial Expired");
         }
 
-        public ProfilerLicense License { get; set; }
 
         public string LicenseType
         {
-            get { return License == null ? ProfilerLicenseTypes.Trial : License.LicenseType; }
+            get { return licenseManager.CurrentLicense.LicenseType; }
         }
         
         public string RegisteredTo
         {
-            get { return HasTrialLicense ? ProfilerLicense.UnRegisteredUser : License.RegisteredTo; }
+            get { return licenseManager.CurrentLicense.RegisteredTo; }
         }
 
         public int TrialDaysRemaining
         {
-            get { return _licenseManager.GetRemainingTrialDays(); }
+            get { return licenseManager.GetRemainingTrialDays(); }
         }
 
         public bool HasTrialLicense
@@ -91,14 +89,16 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 FilterIndex = 1
             });
 
+            var validLicense = false;
+
             if (dialog.Result.GetValueOrDefault(false))
             {
                 var licenseContent = ReadAllTextWithoutLocking(dialog.FileName);
-                _licenseManager.Initialize(licenseContent);
-                License = _licenseManager.CurrentLicense;
+
+                validLicense = licenseManager.TryInstallLicense(licenseContent);
             }
 
-            if (!_licenseManager.TrialExpired && License != null)
+            if (validLicense)
             {
                 TryClose(true);
             }
