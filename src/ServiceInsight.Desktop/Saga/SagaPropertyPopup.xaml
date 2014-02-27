@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewer="clr-namespace:NServiceBus.Profiler.Desktop.MessageViewers"
              xmlns:saga="clr-namespace:NServiceBus.Profiler.Desktop.Saga"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="522" d:DesignWidth="926">
     <Grid.Resources>
@@ -35,7 +36,7 @@
                     <TextBlock Text=" - Properties" Foreground="#B3B3B3" FontSize="20px"/>
                 </StackPanel>
             </StackPanel>
-            <viewer:MessageBodyView Grid.Row="1" DataContext="{Binding NewValue,Converter={StaticResource ValueToBodyConverter}}" Background="#252526"/>
+            <ContentControl cal:View.Model="{Binding NewValue,Converter={StaticResource ValueToBodyConverter}}" Grid.Row="1" Background="#252526"/>
         </Grid>
     </Border>
 </Grid>

@@ -76,6 +76,16 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             return index - StartIndex;
         }
 
+        public bool Pop(int length = 1)
+        {
+            if (StartIndex > length)
+            {
+                StartIndex -= length;
+                return true;
+            }
+            return false;
+        }
+
         public string Substring(int startIndex, int length)
         {
             return Source.Substring(StartIndex + startIndex, length);

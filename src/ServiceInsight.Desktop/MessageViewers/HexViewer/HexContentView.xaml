@@ -40,13 +40,13 @@
                             <TextBlock Margin="5" Text="{Binding Hex}" 
                                        FontFamily="{StaticResource MessageBodyFontFamily}" 
                                        FontSize="{StaticResource MessageBodyFontSize}" 
-                                       Foreground="Black" />
+                                       Foreground="{Binding Path=DataContext.Foreground, ElementName=Control}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
                 <!--Text display of the byte-->
-                <ItemsControl ItemsSource="{Binding Numbers}" Grid.Column="2" Margin="20,0,0,0" BorderBrush="{x:Null}">
+                <ItemsControl ItemsSource="{Binding Numbers}" Grid.Column="2" Margin="5,0,0,0" BorderBrush="{x:Null}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -65,10 +65,10 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    
-    <ScrollViewer>
+
+    <ScrollViewer >
         <ItemsControl x:Name="listBox" 
-                      Background="White"
+                      Background="{Binding Background}"
                       ItemsSource="{Binding HexParts}"/>
     </ScrollViewer>
 </UserControl>

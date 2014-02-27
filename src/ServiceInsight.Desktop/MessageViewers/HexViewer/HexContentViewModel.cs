@@ -4,6 +4,7 @@ using Caliburn.PresentationFramework;
 using Caliburn.PresentationFramework.Screens;
 using NServiceBus.Profiler.Desktop.Events;
 using NServiceBus.Profiler.Desktop.ExtensionMethods;
+using System.Windows.Media;
 
 namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
 {
@@ -23,6 +24,22 @@ namespace NServiceBus.Profiler.Desktop.MessageViewers.HexViewer
         public HexContentViewModel()
         {
             HexParts = new BindableCollection<HexPart>();
+        }
+
+        public Brush Background
+        {
+            get
+            {
+                return Brushes.White;
+            }
+        }
+
+        public Brush Foreground
+        {
+            get
+            {
+                return Brushes.Black;
+            }
         }
 
         public byte[] SelectedMessage { get; set; }

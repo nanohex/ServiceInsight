@@ -15,6 +15,10 @@ using NServiceBus.Profiler.Desktop.Search;
 using NServiceBus.Profiler.Desktop.Shell;
 using NServiceBus.Profiler.Desktop.Startup;
 using NServiceBus.Profiler.Desktop.MessageFlow;
+using NServiceBus.Profiler.Desktop.MessageViewers;
+using NServiceBus.Profiler.Desktop.MessageViewers.HexViewer;
+using NServiceBus.Profiler.Desktop.MessageViewers.JsonViewer;
+using NServiceBus.Profiler.Desktop.MessageViewers.XmlViewer;
 
 namespace NServiceBus.Profiler.Desktop.Modules
 {
@@ -50,6 +54,11 @@ namespace NServiceBus.Profiler.Desktop.Modules
             builder.RegisterType<WpfClipboard>().As<IClipboard>().SingleInstance();
             builder.RegisterType<SimpleSettingsReader>().As<ISettingsReader>().WithParameter(TypedParameter.From(ConfigurationManager.AppSettings));
             builder.RegisterType<ExceptionDetailView>().AsImplementedInterfaces().InstancePerDependency();
+
+            builder.RegisterType<MessageBodyView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<HexContentView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<JsonMessageView>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<XmlMessageView>().AsImplementedInterfaces().InstancePerDependency();
         }
 
         protected static IEnumerable<Type> ExcemptTypes
@@ -61,10 +70,15 @@ namespace NServiceBus.Profiler.Desktop.Modules
                 yield return typeof (LicenseRegistrationView);
                 yield return typeof (ServiceControlConnectionView);
                 yield return typeof (OptionsView);
-                yield return typeof ( ShellView);
+                yield return typeof (ShellView);
                 yield return typeof (ExceptionView);
                 yield return typeof (AboutView);
                 yield return typeof (ExceptionDetailView);
+
+                yield return typeof (MessageBodyView);
+                yield return typeof (HexContentView);
+                yield return typeof (JsonMessageView);
+                yield return typeof (XmlMessageView);
             }
         }
     }

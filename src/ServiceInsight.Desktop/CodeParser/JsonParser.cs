@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Linq;
 
 namespace NServiceBus.Profiler.Desktop.CodeParser
 {
@@ -26,11 +27,19 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
 
                 if (TryExtract(list, ref text, "\"", LexemType.Quotes))
                 {
-                    ParseJsonPropertyName(list, ref text); // Extract Name
-                    TryExtract(list, ref text, "\"", LexemType.Quotes);
-                    TryExtract(list, ref text, ":", LexemType.Symbol);
-                    TrySpace(list, ref text);
-                    TryExtractValue(list, ref text); // Extract Value
+                    if (ParseJsonPropertyName(list, ref text)) // Extract Name
+                    {
+                        TryExtract(list, ref text, "\"", LexemType.Quotes);
+                        TryExtract(list, ref text, ":", LexemType.Symbol);
+                        TrySpace(list, ref text);
+                        TryExtractValue(list, ref text); // Extract Value
+                    }
+                    else //in a list of strings, there are no properties
+                    {
+                        list.Remove(list.Last()); //pop starting quote back; it is needed by extract value
+                        text.Pop(); 
+                        TryExtractValue(list, ref text);
+                    }
                 }
 
                 ParseSymbol(list, ref text); // Parse extras
@@ -82,13 +91,15 @@ namespace NServiceBus.Profiler.Desktop.CodeParser
             text = text.Substring(1);
         }
 
-        private void ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
+        private bool ParseJsonPropertyName(ICollection<CodeLexem> res, ref SourcePart text)
         {
             var index = text.IndexOf("\":");
             if (index <= 0)
-                return;
+                return false;
 
             res.Add(new CodeLexem(LexemType.Property, CutString(ref text, index)));
+
+            return true;
         }
 
         public override Inline ToInline(CodeLexem codeLexem)
