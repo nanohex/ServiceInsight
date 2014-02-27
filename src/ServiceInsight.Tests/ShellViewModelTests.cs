@@ -217,7 +217,7 @@ namespace NServiceBus.Profiler.Tests
             const string LicenseType = "Trial";
             const int NumberOfDaysRemainingFromTrial = 5;
 
-            var issuedLicense = new ProfilerLicense
+            var issuedLicense = new PlatformLicense
             {
                 LicenseType = LicenseType,
                 ExpirationDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day),

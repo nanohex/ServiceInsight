@@ -26,7 +26,7 @@
             }
         }
 
-        public ProfilerLicense CurrentLicense { get; private set; }
+        public PlatformLicense CurrentLicense { get; private set; }
 
         public int GetRemainingTrialDays()
         {
@@ -60,23 +60,23 @@
             return !CurrentLicense.Expired;
         }
 
-        ProfilerLicense ValidateStandardLicense(string license)
+        PlatformLicense ValidateStandardLicense(string license)
         {
             if (string.IsNullOrEmpty(license))
             {
                 throw new Exception("Empty license string");
             }
 
-            return new ProfilerLicense();
+            return new PlatformLicense();
         }
 
-        ProfilerLicense CreateTrialLicense()
+        PlatformLicense CreateTrialLicense()
         {
             var trialExpirationDate = LicenseStore.GetTrialExpiration();
 
             Logger.InfoFormat("Configuring ServiceInsight to run in trial mode.");
 
-            return new ProfilerLicense
+            return new PlatformLicense
             {
                 LicenseType = ProfilerLicenseTypes.Trial,
                 ExpirationDate = trialExpirationDate,

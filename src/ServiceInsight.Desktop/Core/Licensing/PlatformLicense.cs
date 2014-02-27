@@ -2,9 +2,9 @@
 
 namespace NServiceBus.Profiler.Desktop.Core.Licensing
 {
-    public class ProfilerLicense
+    public class PlatformLicense
     {
-        public ProfilerLicense()
+        public PlatformLicense()
         {
             LicenseType = ProfilerLicenseTypes.Standard;
             RegisteredTo = "Unregistered User";
