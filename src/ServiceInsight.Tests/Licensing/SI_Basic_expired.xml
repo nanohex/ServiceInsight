@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<license id="1caecc53-ac4e-4e1a-85c0-8bca122578d1" expiration="2010-01-01T00:00:00.0000000" type="Standard" Applications="SI" LicenseType="Basic">
+  <name>SI_Basic_expired</name>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>w07OJoR87evAXlNe8nZ9c8hjPKM=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>221Yu4IsEeTcHRHB7zOUbRyLQk/s8LET2tRlNTKztH39RS6IYVBIKO56Vuw3jXYcN6Dkdu+4q8bTWWkOr1kw5Co1O91T/i9LH4EKJ3nGkXbVQi9uQqoK5VIuHV8disXMyXzLtFFsOj3LyWqdhoEZzJqPKgfEaoozKS1ZczYGA+k=</SignatureValue>
+  </Signature>
+</license>

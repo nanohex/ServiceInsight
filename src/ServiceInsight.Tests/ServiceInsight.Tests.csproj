@@ -122,6 +122,7 @@
     <Compile Include="HexViewerTests.cs" />
     <Compile Include="JsonParserTests.cs" />
     <Compile Include="JsonViewerTests.cs" />
+    <Compile Include="LicenseDeserializerTests.cs" />
     <Compile Include="MessageFlowViewModelTests.cs" />
     <Compile Include="SearchViewModelTests.cs" />
     <Compile Include="ServiceControlConnectionDialogTests.cs" />
@@ -147,6 +148,15 @@
       <Project>{c7eb8bb8-813b-4cfd-83df-7f38d8dd89ef}</Project>
       <Name>ServiceInsight.Desktop</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Licensing\SI_not_included.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Licensing\SI_Basic_expired.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

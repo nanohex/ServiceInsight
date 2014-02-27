@@ -15,6 +15,9 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
         public bool Expired { get; set; }
 
         public string LicenseType { get; set; }
+
         public string RegisteredTo { get; set; }
+
+        public DateTime? UpgradeProtectionExpiration { get; set; }
     }
 }
