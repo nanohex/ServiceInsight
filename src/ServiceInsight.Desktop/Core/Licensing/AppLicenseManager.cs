@@ -15,7 +15,14 @@
         {
             try
             {
-                CurrentLicense = ValidateStandardLicense(license);
+                var licenseToInstall = ValidateStandardLicense(license);
+
+                if (licenseToInstall.Expired)
+                {
+                    return false;
+                }
+
+                CurrentLicense = licenseToInstall;
 
                 LicenseStore.License = license;
 
@@ -40,25 +47,23 @@
             return remainingDays > 0 ? remainingDays : 0;
         }
 
-        bool Validate(string license)
+        void Validate(string license)
         {
             try
             {
 
                 CurrentLicense = ValidateStandardLicense(license);
 
-                return true;
+                return;
             }
             catch (Exception ex)
             {
-                Logger.Info("Suitable license was not found: {0}", ex);
+                Logger.Info("No valid license found: {0}. Falling back to trial mode",ex);
             }
 
-            Logger.Info("No valid license found. Falling back to trial mode");
+            
 
             CurrentLicense = CreateTrialLicense();
-
-            return !CurrentLicense.Expired;
         }
 
         PlatformLicense ValidateStandardLicense(string licenseText)
@@ -70,14 +75,7 @@
 
             xmlVerifier.VerifyXml(licenseText);
 
-            var license = LicenseDeserializer.Deserialize(licenseText);
-
-            if (license.Expired)
-            {
-                throw new Exception("License has expired");
-            }
-
-            return license;
+            return LicenseDeserializer.Deserialize(licenseText);
         }
 
         PlatformLicense CreateTrialLicense()
@@ -89,6 +87,7 @@
             return new PlatformLicense
             {
                 ExpirationDate = trialExpirationDate,
+                IsExtendedTrial = false
             };
 
         }

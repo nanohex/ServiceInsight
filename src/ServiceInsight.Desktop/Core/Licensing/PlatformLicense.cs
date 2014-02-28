@@ -7,6 +7,7 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
         public PlatformLicense()
         {
             LicenseType = "Trial";
+            IsExtendedTrial = true;
         }
 
         public DateTime? ExpirationDate { get; set; }
@@ -28,6 +29,8 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
         {
             get { return !IsCommercialLicense; }
         }
+
+        public bool IsExtendedTrial { get; set; }
 
         public bool IsCommercialLicense
         {

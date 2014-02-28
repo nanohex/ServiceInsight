@@ -1,13 +1,11 @@
-﻿using System.IO;
-using Caliburn.PresentationFramework.Screens;
-using NServiceBus.Profiler.Desktop.Core;
-using NServiceBus.Profiler.Desktop.Core.Licensing;
-using NServiceBus.Profiler.Desktop.ScreenManager;
-
-namespace NServiceBus.Profiler.Desktop.Shell
+﻿namespace NServiceBus.Profiler.Desktop.Shell
 {
-    using DevExpress.Utils.FormShadow;
-
+    using System.IO;
+    using Caliburn.PresentationFramework.Screens;
+    using Core;
+    using Core.Licensing;
+    using ScreenManager;
+    
     public class LicenseRegistrationViewModel : Screen, ILicenseRegistrationViewModel
     {
         private readonly AppLicenseManager licenseManager;
@@ -35,9 +33,9 @@ namespace NServiceBus.Profiler.Desktop.Shell
         private string GetScreenTitle()
         {
             if (HasRemainingTrial) return string.Format("ServiceInsight - {0} day(s) left on your free trial", TrialDaysRemaining);
-            if(HasFullLicense) return "ServiceInsight"; 
-            
-            return string.Format("ServiceInsight - Trial Expired");
+            if(HasFullLicense) return "ServiceInsight";
+
+            return string.Format("ServiceInsight - {0} Trial Expired", licenseManager.CurrentLicense.IsExtendedTrial ? "Final" : "Initial");
         }
 
 
@@ -60,6 +58,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
         {
             get { return licenseManager.CurrentLicense.IsTrialLicense; }
         }
+
 
         public bool HasFullLicense
         {
@@ -100,7 +99,7 @@ namespace NServiceBus.Profiler.Desktop.Shell
                 validLicense = licenseManager.TryInstallLicense(licenseContent);
             }
 
-            if (validLicense)
+            if (validLicense && !licenseManager.CurrentLicense.Expired)
             {
                 TryClose(true);
             }
