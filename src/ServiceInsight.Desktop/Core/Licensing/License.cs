@@ -2,9 +2,9 @@
 
 namespace NServiceBus.Profiler.Desktop.Core.Licensing
 {
-    public class PlatformLicense
+    public class License
     {
-        public PlatformLicense()
+        public License()
         {
             LicenseType = "Trial";
             IsExtendedTrial = true;

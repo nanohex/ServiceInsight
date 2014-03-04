@@ -28,13 +28,14 @@
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.WarnFormat("Can't install license: {0}", ex);
                 return false;
             }
         }
 
-        public PlatformLicense CurrentLicense { get; private set; }
+        public License CurrentLicense { get; private set; }
 
         public int GetRemainingTrialDays()
         {
@@ -66,7 +67,7 @@
             CurrentLicense = CreateTrialLicense();
         }
 
-        PlatformLicense ValidateStandardLicense(string licenseText)
+        License ValidateStandardLicense(string licenseText)
         {
             if (string.IsNullOrEmpty(licenseText))
             {
@@ -78,13 +79,13 @@
             return LicenseDeserializer.Deserialize(licenseText);
         }
 
-        PlatformLicense CreateTrialLicense()
+        License CreateTrialLicense()
         {
             var trialExpirationDate = LicenseStore.GetTrialExpiration();
 
             Logger.InfoFormat("Configuring ServiceInsight to run in trial mode.");
 
-            return new PlatformLicense
+            return new License
             {
                 ExpirationDate = trialExpirationDate,
                 IsExtendedTrial = false

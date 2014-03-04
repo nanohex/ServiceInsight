@@ -47,6 +47,21 @@ namespace NServiceBus.Profiler.Desktop.Core.Licensing
         {
             get
             {
+
+                using (var registryKey = Registry.LocalMachine.OpenSubKey(RegistryKey))
+                {
+                    if (registryKey != null)
+                    {
+                        var licenseValue = (string)registryKey.GetValue("License", null);
+
+                        if (!string.IsNullOrEmpty(licenseValue))
+                        {
+                            return licenseValue;
+                        }
+                    }
+                }
+
+                
                 using (var registryKey = Registry.CurrentUser.OpenSubKey(RegistryKey))
                 {
                     if (registryKey != null)

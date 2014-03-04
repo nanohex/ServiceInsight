@@ -7,9 +7,9 @@
 
     static class LicenseDeserializer
     {
-        public static PlatformLicense Deserialize(string licenseText)
+        public static License Deserialize(string licenseText)
         {
-            var license = new PlatformLicense();
+            var license = new License();
             var doc = new XmlDocument();
             doc.LoadXml(licenseText);
 
